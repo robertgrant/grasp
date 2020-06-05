@@ -1,0 +1,46 @@
+model {
+	for (i in 1:10) {
+		for (j in 1:2) {
+			impair[i,j] <- (beta[1]*(1-ngrasp[i])) +
+  (beta[2]*ngrasp[i]) +
+ 		                      (beta[3]*period[j]) +
+					  (beta[4]*ngrasp[i]*period[j]) +
+   ui[i]
+		}
+	}
+	for (i in 1:N) {
+		mu[i] <- impair[id[i],(1+nperiod[i])] + diff[ntask[i]]
+		logit(p[i]) <- beta[5] + (beta[6] * mu[i])
+		d[i] ~ dbern(p[i])
+		mu.logt[i] <-(d[i] * mu[i])+ ((1-d[i]) * 6.803505)
+		logt[i] ~ dnorm(mu.logt[i],tau[i])
+		tau[i] <- (d[i] * tau.logt) + ((1-d[i]) * 1000)
+		mu.fas[i] <- beta[7] + (beta[8] * mu[i])
+		y.fas[i] ~ dnorm(mu.fas[i],tau.fas)T(thr[fas[i]+1],thr[fas[i]+2])
+	}
+	for (i in 1:10) {
+		for (j in 1:2) {
+			mu.dyna[i,j] <- beta[9] + (beta[10] * impair[i,j])
+			dyna[i,j] ~ dnorm(mu.dyna[i,j],tau.dyna)
+		}
+	}
+	for (j in 1:15) {
+		diff[j] ~ dnorm(0,tau.diff)
+	}
+	for (i in 1:10) {
+		ui[i] ~ dnorm(0,tau.i)
+	}
+	tau.diff ~ dgamma(0.01,0.01)
+	tau.i ~ dgamma(0.01,0.01)
+	tau.logt ~ dgamma(0.01,0.01)
+	tau.fas ~ dgamma(0.01,0.01)
+	tau.dyna ~ dgamma(0.01,0.01)
+	for (i in 1:10) {
+		beta[i] ~ dnorm(0,0.001)
+	}
+	sd[1] <- pow(tau.logt,-0.5)
+	sd[2] <- pow(tau.i,-0.5)
+	sd[3] <- pow(tau.diff,-0.5)
+	sd[4] <- pow(tau.fas,-0.5)
+	sd[5] <- pow(tau.dyna,-0.5)
+}
