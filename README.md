@@ -10,7 +10,7 @@ Diffuse conjugate priors were used throughout; we contend that this is justified
 
 For comparison with the task-by-task non-parametric tests, we provided approximate equivalent p-values from the Bayesian model. This is unusual but we felt it was justified because the comparison would be clearer that way. See the image below. The posterior distributions were all convincingly close to Gaussian (normal) with modes close to zero, and priors were symmetric about zero and diffuse, so we assert that if there had been an equivalent Neyman-Pearson type test (two-tailed), it would have had tail probabilities well-approximated by twice the tail of the posterior on the other side of zero from the mode.
 
-!(Diagram of sampling distribution under H0 and posterior distribution)[aepv.jpg]
+![Diagram of sampling distribution under H0 and posterior distribution])aepv.jpg)
 
 The patients’ impairments and tasks’ difficulties are represented as crossed random effects (also known as an item-response theory model). So, although this model included all results on all tasks at both time points, it does not regard these as independent observations but as arising from a specific patient and a specific task. See the paper for details of the model's conceptualisation as a structural equation model.
 
